@@ -1,0 +1,265 @@
+﻿<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script src="../../Scripts/jquery-1.8.3.js"></script>
+<script src="../../Scripts/jquery-ui-1.9.2.js"></script>
+
+<script src="../../Scripts/jquery.fileupload.js"></script>
+<script src="../../Scripts/jquery.iframe-transport.js"></script>
+
+
+<script src="../../Scripts/js/bootstrap.min.js"></script>
+
+
+<link href="~/Scripts/jquery.fileupload-ui-noscript.css" rel="stylesheet" />
+<link href="~/Scripts/jquery.fileupload-ui.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+<style>
+#myProgress {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #ddd;
+}
+
+#myBar {
+  position: absolute;
+  width: 1%;
+  height: 100%;
+  background-color: #4CAF50;
+}
+</style>
+
+
+<h2>Ajax File Uploading</h2>
+
+
+<div>
+
+    <div>
+        <h1>Upload File</h1>
+    </div>
+
+
+    @using (Html.BeginForm("Upload", "UploadCourse", FormMethod.Post,
+    new
+    {
+        enctype = "multipart/form-data",
+        id = "ImgForm",
+        name = "ImgForm",
+        target = "UploadTarget"
+    }))
+    {
+        
+@* DataBase Record ID as Hidden Field against which we are uplaoding file  *@
+         
+        @Html.Hidden("ID", 65512)
+        <div style="width: 100px; margin: auto; float: left; line-height: 30px; font-weight: bold;">File</div>
+     
+         
+        <div style="width: 200px; float: left; margin: auto;">
+
+            <input type="file" id="uploadFile" name="file" data-val="true" data-val-required="please select a file" />
+            <span id="validityMessages" style="color: Red;"></span>
+        </div>
+
+         
+        <div style="clear: both;"></div>
+     
+        <div style="width: auto; margin-top: 3%;">
+            <div style="margin: 5% 18%;">
+                <input id="upload" type="button" value="Upload" name="Upload" onclick="UploadImage()" />
+                <span id="uploadLoader" style="display: none;">
+                    <img id="searchLoader" src="@Url.Content("~/Content/Images/loader.gif")" />Uploading Please Wait</span>
+            </div>
+        </div>
+        <div id="myProgress">
+          <div id="myBar"></div>
+        </div>
+           
+     
+    }
+    <img id="image-preview" src="" width="100" height="100" />
+                            <script>
+                                var loadFile = function (event) {
+                                    var output = document.getElementById('output');
+                                    output.src = URL.createObjectURL(event.target.files[0]);
+                                };
+                            </script>
+                            <script>
+                                function readURL(input) {
+
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+
+                                        reader.onload = function (e) {
+                                            $('#image-preview').attr('src', e.target.result);
+                                        }
+
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+
+                                $("#output").change(function () {
+                                    readURL(this);
+                                });
+                            </script>
+    <div id="uploadsContainer">    </div>
+    <iframe id="UploadTarget" name="UploadTarget" onload="UploadImage_Complete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+</div>
+
+<p>Our Code</p>
+<input type="text" id="UserProfile" />
+
+
+
+
+@section PageScripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('img.delUpload').live('click', function () {
+
+                var Id = this.id;
+
+                var url = "/UploadCourse/DeleteFile";
+
+                url = url + "?id=" + Id
+                $.get(url, function (response) {
+
+                    $('#uploadsContainer').html(response);
+
+
+                });
+
+
+            });
+
+        });
+
+
+    </script>
+
+
+
+    <script type="text/javascript">
+        var isFirstLoad = true;
+
+        function UploadImage() {
+
+
+
+            // check for size of file not greater than 1MB
+            if ($("#uploadFile").val()) {
+
+
+                var iSize = ($("#uploadFile")[0].files[0].size / 1024);
+
+
+                iSize = (Math.round((iSize / 1024) * 100) / 100);
+
+                if (iSize > 4) {
+
+                    alert("File must be less than 4MB");
+
+                    $('span#validityMessages').html("File must be less than 4MB");
+
+
+
+                    return;
+
+                }
+                else {
+                    //document.getElementById('UserProfile').value = $("#uploadFile")[0].files[0];
+                    //var varfile = document.getElementById("uploadFile");
+                    
+                    var elem = document.getElementById("myBar");
+                    var width = 1;
+                    var id = setInterval(frame, 10);
+                    function frame() {
+                        if (width >= 100) {
+                            clearInterval(id);
+                        } else {
+                            width++;
+                            elem.style.width = width + '%';
+                        }
+                    }
+                    document.getElementById("UserProfile").value = document.getElementById('uploadFile').value;
+                    // on form post showing Busy Indicator
+                    $('#uploadLoader').show();
+                    $("#ImgForm").submit();
+
+                    console.log(iSize + "Mb");
+                }
+            }
+
+                // check for no file selected for upload
+
+            else {
+
+
+                $('span#validityMessages').html("Please select a File of size less than 4MB!");
+
+
+                return;
+            }
+
+
+
+        }
+
+        function UploadImage_Complete() {
+            //Check to see if this is the first load of the iFrame
+            if (isFirstLoad == true) {
+                isFirstLoad = false;
+
+                // if first ajax call for getting uploads if any exists on server against this id 
+
+            }
+
+            // after successfull upload refreshing partial view to get the latest uploads
+
+            $('#uploadLoader').hide();
+
+
+
+            //Reset the image form so the file won't get uploaded again
+            document.getElementById("ImgForm").reset();
+
+            //if (!isFirstLoad)
+            //    GetFiles();
+            GetFiles();
+
+            
+
+        }
+
+
+
+        function GetFiles() {
+
+            var url = "/UploadCourse/GetFiles";
+            
+            var Id = $('input#ID').val();
+            url = url + "?id=" + Id
+            $.get(url, function (response) {
+                //document.getElementById("UserProfile").val(html.response);
+                
+                $('#uploadsContainer').html(response);
+
+
+            });
+
+        }
+
+    </script>
+    }

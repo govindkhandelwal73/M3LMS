@@ -1,0 +1,32 @@
+﻿<table class="table table-hover my-table">
+    <thead>
+
+        <tr>
+            <th>Select</th>
+            <th>Name </th>
+            <th>Email Id</th>
+            <th>View Course</th>
+            @*<th>Active Status</th>*@
+            <th>Assign Course</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (M3LMS.ViewModels.UserWithCourse user in ViewBag.LearnerList)
+        {
+            <tr>
+                <td><input type="checkbox" name="user" id="user" value="@user.EmailId" /></td>
+                <td>@user.Name</td>
+                <td>@user.EmailId</td>
+                <td style="width:40%">@user.CourseName</td>
+                <td>@Html.ActionLink("Assign Course", "AssignCoursebyUser", new { EmailId = @user.EmailId, Name = @user.Name, DepId = @user.DepartmentId })</td>
+
+
+            </tr>
+
+        }
+
+    </tbody>
+
+</table>

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>M3 Learning Managment System</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+       @* <script type="text/javascript" src="https://www.google.com/jsapi"></script>*@
+   
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    @* <script type="text/javascript" src="https://www.google.com/jsapi"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <!--Fevicon -->
+    <!--Fevicon -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- JS Core -->
+    @*@Scripts.Render("~/Scripts/jquery-1.7.1.min.js")*@
+
+    <style>
+        .user-profile-toggle {
+            position: absolute;
+            overflow: hidden;
+            display: block;
+            right: 19px;
+            background-color: #fff;
+            top: 50px;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="header-wrpr">
+            @{
+                M3LMS.ViewModels.Admin obj = new M3LMS.ViewModels.Admin();
+
+                M3LMS.ViewModels.Admin.BackColor = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Color").Select(a => a.Text).SingleOrDefault();
+                M3LMS.ViewModels.Admin.Name1 = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Name1").Select(a => a.Text).SingleOrDefault();
+                M3LMS.ViewModels.Admin.Name2 = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Name2").Select(a => a.Text).SingleOrDefault();
+
+                M3LMS.ViewModels.Admin.Image = obj.GetImage(Session["UserName"].ToString());
+    //HtmlString abcd = new HtmlString(string.Format("<div class='header' style='{0}'><div class='pull-left logo'><h2>{1}</h2></div><div class='pull-right'><div class='user-account'><a href='#' title='My Account' class='user-profile'><img src='../images/gravatar.jpg' alt='Profile image'><span>{2}</span><i class='glyph-icon icon-angle-down'></i></a></div></div></div>", M3LMS.ViewModels.Admin.BackColor, M3LMS.ViewModels.Admin.Name1, M3LMS.ViewModels.Admin.Name2));
+
+    @obj.Header
+    //Login UserName:@obj.LoginUserName(Session["UserName"].ToString());
+
+
+            }
+            <script>
+                $(document).ready(function () {
+                    $(".user-profile").click(function () {
+                        $(".user-profile-toggle").slideToggle();
+                    });
+                });
+            </script>
+            <div class="user-profile-toggle" style="position:absolute;">
+
+                <div>
+                    <div class="box-sm">
+                        <div class="login-box clearfix">
+                            <div class="user-info">
+                                <span>
+                                    @obj.LoginUserName(Session["UserName"].ToString())
+
+                                </span>
+
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-off"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="page-sidebar">
+            <div class="scroll-sidebar">
+                <ul id="sidebar-menu">
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/dashboard-icon.svg" alt="Dashboard Icon">
+                        </i>
+
+                        @*Html.ActionLink("Dashboard", "Index1", "Dashboard")*@
+                        @Html.ActionLink("Dashboard", "Index1", "Dashboard")
+                        @*@Ajax.ActionLink("Dashboard", "Index1", "Dashboard", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })*@
+                    </li>
+                    <li class="divider"></li>
+
+                    @if (Session["UserType"].ToString() == "Super Admin")
+                    {
+                        <li>
+                            <i class="icon">
+                                <img src="~/images/icon/department-icon.svg" alt="Department Icon">
+                            </i>
+                            @Ajax.ActionLink("Create Department", "CreateDepartment", "Dep", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                        </li>
+                    }
+
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/learner-icon.svg" alt="learner Icon">
+                        </i>
+                        @Ajax.ActionLink("Create User", "CreateUser", "User", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/test-icon.svg" alt="test Icon">
+                        </i>
+                        @Ajax.ActionLink("Upload Bulk Users", "BulkUserUpload", "User", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/page-setting-icon.svg" />
+                        </i>
+                        @Ajax.ActionLink("Page Settings", "Index", "PageSettings", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/report-icon.svg" alt="report Icon">
+                        </i>
+                        @Html.ActionLink("Report Card", "")
+                    </li>
+                    <li class="divider"></li>
+                </ul>
+                <!-- #sidebar-menu -->
+
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <div id="page-content">
+                <div class="container" id="content_wrpr">
+                    @RenderBody()
+
+                </div>
+                @section Scripts
+            {
+                    @*@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")*@
+
+                }
+                <script type="text/javascript">
+                    var RootUrl = '@Url.Content("~/")';
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Demo -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Edit').click(function () {
+                var password = $('#password1').val();
+                if (password == null) {
+                    document.getElementById('pass_label').innerHTML = "Reguired"
+                }
+                var url = "/User/EditUser";
+                var form = $("#frm");
+                var userid = $("#Id").val();
+                var formData = form.serialize();
+                $.post(url, formData, function (data) {
+                    $.alert.open('Success.!!', 'Data Updated Successfully..!!');
+                    $("#content_wrpr").html(data);
+
+                });
+            })
+        })
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+
+
+</body>
+</html>

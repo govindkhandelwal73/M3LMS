@@ -1,0 +1,124 @@
+﻿@model M3LMS.ViewModels.Chapters
+
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<div id="content">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="page-heading">
+                <h2 class="pull-left">Create Chapter</h2>
+            </div>
+            @using (Html.BeginForm("Chapter", "Manager", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-horizontal form-wrpr">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Course Name<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(a => a.CourseId, ViewBag.CourseLists as IEnumerable<SelectListItem>, "Select Course", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CourseId, "Select Course Name")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Chapter Name<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.ChapterName, new { @class = "form-control", @placeholder = "Enter Chapter Name" })
+                            @Html.ValidationMessageFor(model => model.ChapterName, "Enter Chapter Name")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Content Type<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(model => model.Content_Type, new SelectList(
+                          new List<Object>{
+                               new { value = "Word Document" , text = "Word Document"  },
+                               new { value = "Pdf File" , text = "Pdf File" },
+                               new { value = "Presentaion" , text = "Presentaion"},
+                                 new { value = "Video File" , text = "Video File"}
+                            },
+                          "value",
+                          "text",
+                           2), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Content_Type)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Upload Content<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(a => a.ChapContent, new { type = "file", @class = "form-control", id = "output", @required = "true" })
+                            @Html.ValidationMessageFor(model => model.ChapContent, "File required")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Sort Order<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Sort_Order, new { @class = "form-control", @placeholder = "Enter Sorting Order" })
+                            @Html.ValidationMessageFor(model => model.Sort_Order, "Enter Sorting Order")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">&nbsp;<span class="form-colon"></span></label>
+                        <div class="col-sm-6">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+
+                        @if (TempData["ErrMsg"] != null)
+                        {
+                            <script type="text/javascript">
+                                alert("@TempData["ErrMsg"].ToString()");
+
+                            </script>
+
+                        }
+                        }
+                    </div>
+                </div>
+            }
+            <div>
+                <div class="page-heading">
+                    <h2 class="pull-left">List of Chapter</h2>
+                </div>
+                @using (Html.BeginForm("deleteNstatusCommand_chapter", "Manager", new { id = "frm" }))
+                {
+                    <table class="table table-hover my-table">
+                        <thead>
+                            <tr>
+                                <td>Select</td>
+                                <th>Module Name </th>
+                                <th>Course Name</th>
+                                <th>Content Type</th>
+                                <th>Sort Order</th>
+                                <th>Download Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (M3LMS.Models.ref_chapters Chapter in ViewBag.ChapterLists)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" name="chid" id="chid" value="@Chapter.ChapterId" /></td>
+                                    <td>@Chapter.ChapterName</td>
+                                    <td>@Chapter.ref_modules.CourseName</td>
+                                    <td>@Chapter.Content_Type</td>
+                                    <td>@Chapter.Sort_Order</td>
+                                    <td>@Html.ActionLink("Download", "GetFile", "Manager", new { id = Chapter.ChapterId }, null)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <input type="submit" name="command" value="Delete" class="btn btn-primary">
+
+                }
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+</script>
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>

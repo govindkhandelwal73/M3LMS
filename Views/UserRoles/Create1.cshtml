@@ -1,0 +1,139 @@
+﻿@model M3LMS.Models.ref_UserRoles
+
+@{
+    ViewBag.Title = "Create User Role";
+}
+<style>
+    .form-control {
+        margin-bottom: 10px;
+    }
+</style>
+<!-- Dropdown Plugin -->
+<script src="~/Content/css/dropdown/all.js"></script>
+<link href="~/Content/css/dropdown/jquery.multiselect.css" rel="stylesheet" />
+<script src="~/Content/css/dropdown/jquery.multiselect.js"></script>
+<script src="~/Content/css/dropdown/platform.js"></script>
+<link href="~/Content/css/dropdown/style.css" rel="stylesheet" />
+<script>
+    $('#langOpt3').multiselect({ columns: 1, placeholder: 'Select Roles', search: true, selectAll: true });
+</script>
+
+<!-- Alert -->
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+<link href="~/Content/css/popup/alert.min.css" rel="stylesheet" />
+<script src="~/Content/css/popup/alert.min.js"></script>
+<link href="~/Content/css/popup/theme.min.css" rel="stylesheet" />
+
+<style>
+    .ms-options ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .ms-options ul label {
+            padding-left: 20px !important;
+        }
+</style>
+<h2>Create</h2>
+
+@using (Html.BeginForm("Index", "UserRoles", FormMethod.Post, new { id = "frm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    List<SelectListItem> listDeptItems = new List<SelectListItem>();
+    listDeptItems.Add(new SelectListItem
+    {
+        Text = "None",
+        Value = "-1"
+    });
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Select User <span class="form-colon">:</span></label>
+            <div class="col-sm-9">
+                @Html.DropDownListFor(a => a.Id, (IEnumerable<SelectListItem>)ViewBag.UserList, "Select User", new { @class = "form-control" })
+            </div>
+            <div class="clearfix"></div>
+            <label class="col-sm-3 control-label">Select Department <span class="form-colon">:</span></label>
+            <div class="col-sm-9">
+                @Html.DropDownList("Departments", listDeptItems, "--Select department--", new { @class = "form-control" })
+
+            </div>
+
+            <div class="clearfix"></div>
+            <label class="col-sm-3 control-label">Select Role <span class="form-colon">:</span></label>
+            <div class="col-sm-9">
+                @Html.DropDownList("Roles", (MultiSelectList)ViewBag.RolesList, new { multiple = "multiple", id = "langOpt3" })
+
+            </div>
+
+            <div class="col-lg-offset-3">
+                <div style="margin:15px">
+                    <input type="button" value="Save" id="Save" name="Save" class="btn btn-primary" />
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#Id").change(function () {
+            $("#Departments").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetUserDepartments")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#Id").val() },
+
+
+                success: function (departments) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    $.each(departments, function (i, state) {
+                        $("#Departments").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+                        // here we are adding option for States
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+        //
+        $("#Save").click(function () {
+
+            var url =RootUrl+ "/UserRoles/Create";
+            var form = $("#frm");
+
+
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+                //alert("Data Successfully Saved");
+                $.alert.open('Success.!!', 'Data Successfully Saved');
+                $("#content_wrpr").html(data);
+
+            });
+        })
+        //
+
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

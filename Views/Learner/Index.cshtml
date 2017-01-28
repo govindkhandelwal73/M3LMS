@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLearner.cshtml";
+}
+}
+@model M3LMS.ViewModels.Learner
+
+
+<section class="vbox">
+    <section id="content">
+        <section class="vbox">
+            <section class="scrollable wrapper-lg">
+                <div class="row">
+                    <p class="lead heading">Courses </p>
+                    <div class="col-sm-9 pad-0 white-bg">
+                        <div class="blog-post">
+                            @{
+
+                                foreach (var item in Model.CourseDetails)
+                                {
+                                    <div class="post-item">
+                                        <div class="post-media col-lg-2 pad-0">
+                                            <i class="fa fa-folder-o icon text-success"></i>
+                                        </div>
+
+                                        <div class="caption col-lg-9">
+                                            <h2 class="post-title"><a href="Courses-content.html">@item.CourseName</a></h2>
+                                            <div class="text-muted"> <i class="fa fa-user icon-muted"></i> by <a href="#" class="m-r-sm">Manager</a> <i class="fa fa-clock-o icon-muted"></i> @item.CreatedDate.ToShortDateString() </div>
+                                            <div class="post-sum">
+                                                <br>
+                                                <p><b>Course Details</b> <br /> Description : @item.Description </p>
+                                                @*<div class="progress progress-striped">
+                                                        <div class="progress-bar  progress-bar-success" style="width: 60%;"> <span class="sr-only">60% Complete</span> </div>
+                                                    </div>*@
+                                                <div class="media media-responsive course-list">
+                                                    <div class="media-body mb-xs-12">
+                                                        <div class="row">
+                                                            <div ng-if="filter_by == helper.dashboard_filters.enrolled_courses" class="ng-scope">
+                                                                <div class="col-xs-6 col-sm-3 col-lg-3 two-lines-info">
+                                                                    <p class="ng-binding">Status</p>
+                                                                    <div> <strong class="ng-binding">New</strong> </div>
+                                                                </div>
+                                                                <div class="col-xs-6 col-sm-3 two-lines-info mb-xs-6 ng-scope" ng-if="course.only_contains_sessions == 0">
+                                                                    <p class="ng-binding">Content</p>
+                                                                    <div> <a href="/enrollments/6439870/content"> <strong class="ng-binding">@item.Description</strong> </a> </div>
+                                                                </div>
+                                                                @*<div class="hidden-xs col-sm-3 two-lines-info mb-xs-6 ng-scope" ng-if="showLastAccessed( course )">
+                                                                    <p class="ng-binding">Created Date</p>
+                                                                    <div><strong class="ng-binding">@item.CreatedDate</strong></div>
+                                                                </div>*@
+                                                                @*<div class="hidden-xs col-sm-3 col-lg-3 two-lines-info">
+                                                                        <p class="ng-binding">Enrolled</p>
+                                                                        <div><strong class="ng-binding">15 Dec 2016</strong></div>
+                                                                    </div>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                   
+                                                    <div class="btn-group btn-group-justified"> @Html.ActionLink("Click Here to Launch", "ChapterDetails", new { CourseID = @item.CourseId, CourseName=@item.CourseName }, new { @class = "btn btn-success" }) </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                }
+                            }
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h5>Courses Status</h5>
+                        <div class="blue-bg">
+                            <div class="col-xs-4 pad-0">
+                                <div class="padder-v"><span class="m-b-xs h3 block text-white">@Model.TotalCourseCount</span><small class="text-muted">Courses Entrolled</small> </div>
+                            </div>
+                            <div class="col-xs-4 pad-0">
+                                <div class="padder-v"> <span class="m-b-xs h3 block text-white">@Model.CourseCompleted</span> <small class="text-muted">Courses Completed</small> </div>
+                            </div>
+                            <div class="col-xs-4 pad-0">
+                                <div class="padder-v"> <span class="m-b-xs h3 block text-white">@Model.NewTestCount</span> <small class="text-muted">Test Enrolled</small> </div>
+                            </div>
+                        </div>
+                        @*<h5>&nbsp;</h5>
+                            <h5>Recent Posts</h5>
+                            <div>
+                                <article class="media">
+                                    <a class="pull-left thumb thumb-wrapper m-t-xs"> <img src="images/m1.jpg"> </a>
+                                    <div class="media-body">
+                                        <a href="#" class="font-semibold">Loreum Ipsum Loreum</a>
+                                        <div class="text-xs block m-t-xs"><a href="#">Loreum </a> 2 minutes ago</div>
+                                    </div>
+                                </article>
+                                <div class="line"></div>
+
+                                <article class="media">
+                                    <a class="pull-left thumb thumb-wrapper m-t-xs"> <img src="images/m1.jpg"> </a>
+                                    <div class="media-body">
+                                        <a href="#" class="font-semibold">Loreum Ipsum Loreum</a>
+                                        <div class="text-xs block m-t-xs"><a href="#">Loreum </a> 2 minutes ago</div>
+                                    </div>
+                                </article>
+                                <div class="line"></div>
+                                <article class="media">
+                                    <a class="pull-left thumb thumb-wrapper m-t-xs"> <img src="images/m1.jpg"> </a>
+                                    <div class="media-body">
+                                        <a href="#" class="font-semibold">Loreum Ipsum Loreum</a>
+                                        <div class="text-xs block m-t-xs"><a href="#">Loreum </a> 2 minutes ago</div>
+                                    </div>
+                                </article>
+                            </div>*@
+                    </div>
+                </div>
+            </section>
+        </section>
+        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+    </section>
+</section>

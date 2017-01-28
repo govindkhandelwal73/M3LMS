@@ -1,0 +1,74 @@
+﻿@model M3LMS.ViewModels.Learner
+<div class="form-horizontal form-wrpr">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Course Name<span class="form-colon">:</span></label>
+        <div class="col-sm-6">
+            @Html.ListBoxFor(model => model.SelectedCourseIdlist, ViewBag.AllCourseLists as MultiSelectList, new { @class = "form-control", @required = "true", validate = "true" })
+        </div>
+    </div>
+</div>
+<div class="page-heading">
+    <h2 class="pull-left">List of User</h2>
+</div>
+
+
+<table class="table table-hover my-table">
+    <thead>
+
+        <tr>
+            <th id="SelectAll">Select</th>
+            <th>Name </th>
+            <th>Email Id</th>
+            <th>Assigned Course</th>
+            @*<th>Active Status</th>*@
+            @*<th>Assign Course</th>*@
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (M3LMS.ViewModels.UserWithCourse user in ViewBag.LearnerList)
+        {
+            <tr>
+                <td><input type="checkbox" name="user" id="user" value="@user.EmailId" /></td>
+                <td>@user.Name</td>
+                <td>@user.EmailId</td>
+                <td style="width:40%">@user.CourseName</td>
+                @*<td>@Html.ActionLink("Assign Course", "AssignCoursebyUser", new { EmailId = @user.EmailId, Name = @user.Name, DepId = @user.DepartmentId })</td>*@
+
+
+            </tr>
+
+        }
+
+    </tbody>
+
+</table>
+
+<script>
+
+    $('#SelectedCourseIdlist').multiselect({
+        columns: 1,
+        placeholder: 'Select Courses',
+        search: true,
+        selectAll: true
+    });
+
+    $(document).ready(function () {
+
+        $("#SelectAll").click(function () {
+
+
+            if (!$("#user").hasClass("newChecked")) {
+
+                $("#user").addClass("newChecked");
+                $("#user").prop('checked', true);
+            }
+            else {
+                $("#user").removeClass("newChecked");
+                $("#user").prop('checked', false);
+            }
+
+        });
+    });
+</script>

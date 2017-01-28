@@ -1,0 +1,148 @@
+﻿@model M3LMS.ViewModels.QuestionText
+
+@*<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+<div id="content">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="page-heading">
+                <h2 class="pull-left">Set Questions</h2>
+            </div>
+            
+            @using (Html.BeginForm("Question","Manager",FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                //@Html.ValidationSummary(true)
+                <div class="form-horizontal form-wrpr">
+           
+                    @*<div class="form-group">
+                        <label class="col-sm-2 control-label">Select Course<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.QuestionId)
+                            @Html.ValidationMessageFor(model => model.QuestionId)
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Select Course<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(a => a.CourseId, ViewBag.CourseList as IEnumerable<SelectListItem>, "Select Course", new {@class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CourseId, "Select Course")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Question<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Question, new {@class = "form-control", @placeholder="Enter Question" })
+                            @Html.ValidationMessageFor(model => model.Question,"Enter Question")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Option 1<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Option1, new {@class = "form-control", @placeholder="Enter Option 1" })
+                        @Html.ValidationMessageFor(model => model.Option1,"Enter Option 1")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Option 2<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Option2, new {@class = "form-control", @placeholder="Enter Option 2" })
+                            @Html.ValidationMessageFor(model => model.Option2,"Enter Option 2")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Option 3<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Option3, new {@class = "form-control", @placeholder="Enter Option 3" })
+                            @Html.ValidationMessageFor(model => model.Option3,"Enter Option 3")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Option 4<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Option4, new {@class = "form-control", @placeholder="Enter Option 4" })
+                            @Html.ValidationMessageFor(model => model.Option4,"Enter Option 4")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Answer<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(model => model.Answer, new SelectList(
+                              new List<Object>{
+                                   new { value = "1" , text = "Option-1"  },
+                                   new { value = "2" , text = "Option-2" },
+                                   new { value = "3" , text = "Option-3"},
+                                    new { value = "4" , text = "Option-4"}
+                                },
+                              "value",
+                              "text",
+                               1), new {@class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Answer,"Enter Answer")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Active, null, new {@class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Active,"Select Status")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">&nbsp;<span class="form-colon"></span></label>
+                        <div class="col-sm-6">
+                            <input type="submit" value="Create" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"></div>
+            <div class="page-heading">
+                <h2 class="pull-left">List of Courses</h2>
+            </div>
+            <div>
+                <table class="table table-hover my-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Course Name </th>
+                            <th>Question</th>
+                            <th>Option 1</th>
+                            <th>Option 2</th>
+                            <th>Option 3</th>
+                            <th>Option 4</th>
+                            <th>Answer</th>
+                            <th>Active </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (M3LMS.Models.ref_questions Question in ViewBag.QuestionLists)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="chid" id="chid" value="@Question.QuestionId" /></td>
+                                <td>@Question.ref_modules.CourseName</td>
+                                <td>@Question.Question</td>
+                                <td>@Question.Option1</td>
+                                <td>@Question.Option2</td>
+                                <td>@Question.Option2</td>
+                                <td>@Question.Option4</td>
+                                <td>@Question.Answer</td>
+                                <td>@Question.Active</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+     
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+</script>
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>
+

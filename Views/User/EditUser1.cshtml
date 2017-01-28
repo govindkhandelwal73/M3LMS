@@ -1,0 +1,56 @@
+﻿@model M3LMS.ViewModels.User
+
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { id = "frm", enctype = "multipart/form-data" }))
+{
+
+    @Html.ValidationSummary(true)
+
+    @Html.TextBoxFor(a => a.Email)@Html.ValidationMessageFor(a => a.Email)<br />
+
+    @Html.TextBoxFor(a => a.FirstName)@Html.ValidationMessageFor(a => a.FirstName)<br />
+    @Html.TextBoxFor(a => a.LastName)@Html.ValidationMessageFor(a => a.LastName)<br />
+    @Html.DropDownListFor(a => a.DepartmentId, ViewBag.DeptLists as IEnumerable<SelectListItem>, "-Select Dept-")@Html.ValidationMessageFor(a => a.DepartmentId)<br />
+    @Html.DropDownListFor(a => a.RoleId, ViewBag.RoleList as IEnumerable<SelectListItem>, "-Select Role-")@Html.ValidationMessageFor(a => a.RoleId)<br />
+    <img src="@Url.Content("~/Content/Upload/" + ViewBag.Image)" width="150" height="150" />
+    @Html.TextBoxFor(a => a.ImagePath, new { type = "file" }) @Html.ValidationMessageFor(a => a.ImagePath)    <br />
+    @Html.RadioButtonFor(model => model.ActiveStatus, "True", Model.ActiveStatus == true ? new { Checked = "checked" } : null)<b>Active</b>
+
+    @Html.RadioButtonFor(model => model.ActiveStatus, "False", Model.ActiveStatus == true ? new { Checked = "checked" } : null)<b>In Active</b>
+
+    <input type="submit" value="Save" id="Edit" name="Edit" />
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Edit').click(function () {
+            var password = $('#password1').val();
+            if (password == null) {
+                document.getElementById('pass_label').innerHTML = "Reguired"
+            }
+            var url = "/User/EditUser";
+            var form = $("#frm");
+            var userid = $("#Id").val();
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+                $.alert.open('Success.!!', 'Data Updated Successfully..!!');
+                $("#content_wrpr").html(data);
+
+            });
+        })
+    })
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "LearnerTestList";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+@model M3LMS.ViewModels.Test
+
+<h2>Assign Tests To Learners</h2>
+
+@using(Html.BeginForm(new { id = "frm" }))
+{ 
+
+//@Html.ValidationSummary(false)
+    <div class="form-horizontal form-wrpr">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Department Name<span class="form-colon">:</span></label>
+            <div class="col-sm-6">
+
+                @*@Html.DropDownListFor(model => model.DepartmentId, ViewBag.DeptLists as IEnumerable<SelectListItem>, "Select Department", new { @class = "form-control", @required = "true", validate = "true" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "Please Select the Department")*@
+                @*@Html.DropDownListFor(model => model.CourseId, ViewBag.AllCourseLists as IEnumerable<SelectListItem>, new { @class = "form-control", @required = "true", validate = "true" })*@
+
+                @Html.DropDownListFor(m => m.DepartmentId,
+                  ViewBag.DepartmentList as IEnumerable<SelectListItem>,
+       "Select Department",
+new { @class = "form-control", @onchange = "FillCourse()" })
+                @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        @*<div class="form-group">*@
+            <label class="col-sm-2 control-label">Course Name<span class="form-colon">:</span></label>
+            <div class="col-sm-6">
+                @*@Html.DropDownListFor(model => model.CourseId, ViewBag.AllCourseLists as IEnumerable<SelectListItem>, new { @class = "form-control", @required = "true", validate = "true" })*@
+
+                @Html.DropDownListFor(m => m.CourseId,
+             new SelectList(Enumerable.Empty<SelectListItem>(), "CourseId", "CourseName"),
+       "Select Course",
+new { @class = "form-control", @onchange = "FillTest()" })
+                @Html.ValidationMessageFor(m => m.CourseId, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Test Name<span class="form-colon">:</span></label>
+            <div class="col-sm-6">
+                @*@Html.DropDownListFor(model => model.CourseId, ViewBag.AllCourseLists as IEnumerable<SelectListItem>, new { @class = "form-control", @required = "true", validate = "true" })*@
+
+                @Html.DropDownListFor(m => m.TestId,
+             new SelectList(Enumerable.Empty<SelectListItem>(), "TestId", "Title"),
+       "Select Test",
+       new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TestId, "", new { @class = "text-danger" })
+
+                <input type="submit" value="Assign Test" />
+                </div>
+            </div>
+        
+           
+        
+        <div id="NewusercourselistID">
+
+
+            
+        </div>
+    
+}
+    
+        <script type="text/javascript">
+    // assuming you're using jQuery
+    //$("#ddlModule").change(function (event) {
+    //    $.ajax({
+    //        url: "/Manager/GetQuestions/" + $(this).val(),
+    //        data: { id: $(this).val() /* add other additional parameters */ },
+    //        cache: false,
+    //        type: "POST",
+    //        dataType: "html",
+
+    //        success: function (data, textStatus, XMLHttpRequest) {
+    //            $("#partialDiv").html(data); // HTML DOM replace
+    //        }
+    //    });
+        //});
+
+
+
+
+
+       // $('#ExpiryDate').datepicker();
+
+
+
+        function FillCourse() {
+            var DepartmentID = $('#DepartmentId').val();
+            $.ajax({
+                url: '/Manager/FillCourse',
+                type: "POST",
+                dataType: "JSON",
+                data: { DepartmentID: DepartmentID },
+                success: function (cities, textStatus, XMLHttpRequest) {
+                    alert("1");
+                    $("#CourseId").html(""); // clear before appending new list
+                    $("#CourseId").append($('<option>Select Course</option>'))
+                    $.each(cities, function (i, city) {
+
+                        $("#CourseId").append(
+                            $('<option></option>').val(city.CourseId).html(city.CourseName));
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Error - ' + errorThrown);
+                }
+            });
+
+
+
+                $.ajax({
+                    url: "/Manager/GetUserListByDepartment",
+                    data: { depId: DepartmentID },
+                    cache: false,
+                    type: "POST",
+                    dataType: "html",
+
+                    success: function (data, textStatus, XMLHttpRequest) {
+
+                        $("#NewusercourselistID").html(data); // HTML DOM replace
+                    }
+                });
+
+
+
+        }
+
+
+        function FillTest() {
+            var CourseId = $('#CourseId').val();
+            $.ajax({
+                url: '/Manager/FillTest',
+                type: "POST",
+                dataType: "JSON",
+                data: { CourseId: CourseId },
+                success: function (cities, textStatus, XMLHttpRequest) {
+                    $("#TestId").html(""); // clear before appending new list
+                    $("#TestId").append($('<option>Select Test</option>'))
+                    $.each(cities, function (i, city) {
+                        $("#TestId").append(
+                            $('<option></option>').val(city.TestId).html(city.Title));
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error - ' + errorThrown);
+            }
+            });
+        }
+
+        </script>
+    
+
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+

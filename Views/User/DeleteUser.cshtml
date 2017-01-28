@@ -1,0 +1,141 @@
+﻿@model M3LMS.Models.ref_Users
+@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post, new { id = "frm" }))
+{
+    <!-- Alert -->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <link href="~/Content/css/popup/alert.min.css" rel="stylesheet" />
+    <link href="~/Content/css/popup/theme.min.css" rel="stylesheet" />
+    <style>
+        .delete-wrpr{
+            padding:0
+        }
+        .delete-wrpr input {
+            border: none;
+            position: relative;
+            top: 6px;
+            padding: 0;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="page-heading">
+                <h2 class="pull-left">Delete User</h2>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group hidden">
+                    <label class="col-sm-3 control-label">User Id <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model=>model.DepartmentId)
+                        @Html.TextBoxFor(model=>model.Email)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Last Name <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.TextBoxFor(model => model.FirstName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">First Name <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.TextBoxFor(model => model.LastName)
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <label class="col-sm-3 control-label">Department  <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.TextBoxFor(model => model.ref_department.DeptName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @*<label class="col-sm-3 control-label">Password <span class="form-colon">:</span></label>*@
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.HiddenFor(model => model.Password)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Role <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        @Html.TextBoxFor(model => model.ref_roles.RoleName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Image <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 delete-wrpr">
+                        <img src="@Url.Content("~/Content/Upload/"+Model.ImagePath)" width="100" height="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6" style="padding:0">
+                        @Html.AntiForgeryToken()
+                        <input type="button" value="Delete" id="Delete" name="Delete" class="btn btn-primary"/>
+                        @Ajax.ActionLink("Cancel", "CreateUser", "User", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                @*<fieldset>
+                    <legend>ref_Users</legend>
+
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Id)
+                    </div>
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Email)
+                    </div>
+
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.DepartmentId)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.DepartmentId)
+                    </div>
+
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.Password)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Password)
+                    </div>
+                </fieldset>*@
+
+                
+                }
+                <script type="text/javascript">
+
+                    $(document).ready(function () {
+                        $('#Delete').click(function () {
+                            var url = "/User/DeleteUser";
+                            var form = $("#frm");
+                            var UserId = $("#Id").val();
+                            var DeptId = $("#DepartmentId").val();
+                            var formData = form.serialize();
+                            $.post(url, formData, function (data) {
+                                $.alert.open('Success.!!', 'Data Deleted Successfully..!!');
+                                $("#content_wrpr").html(data);
+
+                            });
+                        })
+                    })
+
+                </script>
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+
+                }

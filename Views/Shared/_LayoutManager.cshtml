@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/css/jquery.multiselect.css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.9.2.js"></script>
+    @*<script src="~/Scripts/jquery-1.12.4.min.js"></script>*@
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <!--Fevicon -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- JS Core -->
+    @*@Scripts.Render("~/Scripts/jquery-1.7.1.min.js")*@
+    <!--Fevicon -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- JS Core -->
+
+    
+
+    <style>
+        .user-profile-toggle {
+            position: absolute;
+            overflow: hidden;
+            display: block;
+            right: 19px;
+            background-color: #fff;
+            top: 50px;
+            z-index: 1000;
+            display: none;
+        }
+           #content_wrpr {
+        background-color: #fff;
+        padding: 30px !iMportant;
+        /* border-bottom: 1px solid #dfe8f1; */
+        /* float: left; */
+        border-radius: 4px;
+        margin-bottom: 30px;
+    }
+           .pull-left.logo {
+                width: 80%;
+            }
+    </style>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="header-wrpr">
+            @{
+                M3LMS.ViewModels.Admin obj = new M3LMS.ViewModels.Admin();
+
+                M3LMS.ViewModels.Admin.BackColor = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Color").Select(a => a.Text).SingleOrDefault();
+                M3LMS.ViewModels.Admin.Name1 = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Name1").Select(a => a.Text).SingleOrDefault();
+                M3LMS.ViewModels.Admin.Name2 = M3LMS.MvcApplication.PageSections.Where(a => a.URI == "Home/Index" && a.SectionName == "Name2").Select(a => a.Text).SingleOrDefault();
+
+                M3LMS.ViewModels.Admin.Image = obj.GetImage(Session["UserName"].ToString());
+                //HtmlString abcd = new HtmlString(string.Format("<div class='header' style='{0}'><div class='pull-left logo'><h2>{1}</h2></div><div class='pull-right'><div class='user-account'><a href='#' title='My Account' class='user-profile'><img src='../images/gravatar.jpg' alt='Profile image'><span>{2}</span><i class='glyph-icon icon-angle-down'></i></a></div></div></div>", M3LMS.ViewModels.Admin.BackColor, M3LMS.ViewModels.Admin.Name1, M3LMS.ViewModels.Admin.Name2));
+              
+                           @obj.Header
+                //Login UserName:@obj.LoginUserName(Session["UserName"].ToString());
+
+
+
+            }
+            <script>
+                $(document).ready(function(){
+                    $(".user-profile").click(function () {
+                        $(".user-profile-toggle").slideToggle();
+                    });
+                });
+            </script>
+            <div class="user-profile-toggle" style="position:absolute;">
+
+                <div>
+                    <div class="box-sm">
+                        <div class="login-box clearfix">
+                            <div class="user-info">
+                                <span>
+                                    @obj.LoginUserName(Session["UserName"].ToString())
+
+                                </span>
+
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-off"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="page-sidebar">
+            <div class="scroll-sidebar">
+                <ul id="sidebar-menu">
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/dashboard-icon.svg" alt="Dashboard Icon">
+                        </i>
+
+                        @Html.ActionLink("Dashboard", "Index", "ManagerDashBoard")
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/course-icon.svg" />
+                        </i>
+                        @Ajax.ActionLink("Course", "CreateCourse", "Manager", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/exam-icon.svg" />                            
+                        </i>
+                        @Ajax.ActionLink("Chapters", "Chapter", "Manager", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/assign-test-icon.svg" />
+                        </i>
+                        @Ajax.ActionLink("Set Questions", "Question", "Manager", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/assign-test-icon.svg" />
+                        </i>
+                      @Ajax.ActionLink("Create Test", "Test", "Manager", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                    </li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/assign-test-icon.svg" />
+                        </i>
+                        @Html.ActionLink("Learner Test Mapping", "LearnerTestList", "Manager")
+                        
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <i class="icon">
+                            <img src="~/images/icon/assign-test-icon.svg" />
+                        </i>
+                        @Html.ActionLink("Learner", "LearnerList", "Manager"@*, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace }*@)
+                    </li>
+
+                </ul>
+                <!-- #sidebar-menu -->
+
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <div id="page-content">
+                <div class="container" id="content_wrpr">
+                    @RenderBody()
+
+                </div>
+                
+                 @*<script type="text/javascript">
+                     var RootUrl = '@Url.Content("~/")';
+                 </script>*@
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Demo -->
+    
+     @RenderSection("scripts", required: false)
+
+    
+    <script src="/Content/css/js/jquery.multiselect.js"></script>
+    <script>
+        $('#SelectedCourseIdlist').multiselect({
+            columns: 1,
+            placeholder: 'Select Courses',
+            search: true,
+            selectAll: true
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+﻿
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawChart1);
+    google.setOnLoadCallback(drawChart2);
+    //google.setOnLoadCallback(drawChart3);
+    //google.setOnLoadCallback(drawChart4);
+    function drawChart1() {
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("Piechart")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'CourseName');
+                data.addColumn('number', 'TotalQuestions');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].CourseName, chartsdata[i].TotalQuestions]);
+                }
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                chart.draw(data,
+                  {
+                      title: "Department Vs UsersCount",
+                      position: "top",
+                      fontsize: "14px",
+                      chartArea: { width: '50%' },
+                  });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    }
+    //
+    function drawChart2() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("Piechart")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'CourseName');
+                data.addColumn('number', 'TotalQuestions');
+
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].CourseName, chartsdata[i].TotalQuestions]);
+                }
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.ColumnChart(document.getElementById('chartdiv2'));
+
+                chart.draw(data,
+                  {
+                      title: "Department Vs UsersCount",
+                      position: "top",
+                      fontsize: "14px",
+                      chartArea: { width: '50%' },
+                  });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    }
+
+
+    //Chart for LoginHistory Data
+
+    @*function drawChart3() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("LoginHistoryChart")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'TotalLogins');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].Date, chartsdata[i].TotalLogins]);
+                }
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.ColumnChart(document.getElementById('chartdiv3'));
+
+                chart.draw(data,
+                  {
+                      title: "Date Vs LoginsCount",
+                      position: "top",
+                      fontsize: "14px",
+                      chartArea: { width: '50%' },
+                  });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    }
+
+    function drawChart4() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("LoginHistoryChart")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'TotalLogins');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].Date, chartsdata[i].TotalLogins]);
+                }
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.PieChart(document.getElementById('chartdiv4'));
+
+                chart.draw(data,
+                  {
+                      title: "Date Vs LoginsCount",
+                      position: "top",
+                      fontsize: "14px",
+                      chartArea: { width: '50%' },
+                  });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    }*@
+</script>
+
+<h2>Dashboard</h2>
+<br />
+
+<script type="text/javascript">
+
+
+</script>
+
+
+
+<div id="chartdiv" style="width: 600px; height: 350px;float:left;">
+</div>
+<div id="chartdiv2" style="width: 600px; height: 350px;float:left;">
+</div>
+
+
+@*<div id="chartdiv3" style="width: 600px; height: 350px;float:left;">
+</div>
+<div id="chartdiv4" style="width: 600px; height: 350px;float:left;">
+</div>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

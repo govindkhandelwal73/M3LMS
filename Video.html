@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script type="text/javascript">
+        function PlayVideo() {
+            var v = document.getElementsByTagName("video")[0];
+            v.play();
+        }
+    </script>
+</head>
+
+<body>
+
+    <form>
+        <video controls width="700" height="600" src="/Tutorials/Videos/Clip1 M3.mp4">
+            Your browser does not support the video element.
+        </video>
+        <br />
+
+        <input type="button" onclick="PlayVideo();" value="Play" />
+    </form>
+
+</body>
+</html>

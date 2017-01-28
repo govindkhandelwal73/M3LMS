@@ -1,0 +1,112 @@
+﻿
+@model M3LMS.ViewModels.Test
+
+@using (Html.BeginForm("Test", "Manager", FormMethod.Post))
+{
+    <table>
+
+        <tr>
+            <td>Select Course</td>
+            <td>
+                @Html.DropDownList("Modules", ViewBag.ModuleList as IEnumerable<SelectListItem>, "Select Module Name",
+                    new
+                    {
+                        Class = "ddlStyle",
+                        id = "ddlModule"
+                    })
+            </td>
+        </tr>
+        <tr>
+            <td>Test Name</td>
+            <td>@Html.TextBoxFor(model => model.Title)</td>
+
+        </tr>
+
+        <tr>
+            <td>Expiry Date</td>
+            <td>@Html.EditorFor(model => model.ExpiryDate)</td>
+        </tr>
+    </table>
+
+        <table class="table table-hover my-table">
+            <thead>
+                <tr>
+                    <th>Select</th>
+
+                    <th>Question</th>
+
+                    <th>Course Name</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (M3LMS.Models.ref_questions item in ViewBag.QuestionList)
+                {
+                    <tr>
+                        <td>
+
+                            <input type="checkbox" id="qid" name="qid" value=@item.QuestionId>
+
+
+                        <td>
+                            @item.Question
+                        </td>
+                        <td>
+                            @item.ref_modules.CourseName
+                        </td>
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+
+
+
+
+
+
+        @*<div id="partialDiv">
+            </div>*@
+
+
+
+        <input type="submit" value="Submit" />
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+
+
+    $(document).ready(function () {
+
+
+        $('#ExpiryDate').datepicker();
+    })
+    // assuming you're using jQuery
+    //$("#ddlModule").change(function (event) {
+    //    $.ajax({
+    //        url: "/Manager/GetQuestions/" + $(this).val(),
+    //        data: { id: $(this).val() /* add other additional parameters */ },
+    //        cache: false,
+    //        type: "POST",
+    //        dataType: "html",
+
+    //        success: function (data, textStatus, XMLHttpRequest) {
+    //            $("#partialDiv").html(data); // HTML DOM replace
+    //        }
+    //    });
+    //});
+
+
+</script>
+
+
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+}

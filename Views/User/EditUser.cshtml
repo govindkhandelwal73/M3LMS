@@ -1,0 +1,34 @@
+﻿
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Edit').click(function () {
+            var password = $('#password1').val();
+            if (password == null) {
+                document.getElementById('pass_label').innerHTML = "Reguired"
+            }
+            var url = "/User/EditUser";
+            var form = $("#frm");
+            var userid = $("#Id").val();
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+                $.alert.open('Success.!!', 'Data Updated Successfully..!!');
+                $("#content_wrpr").html(data);
+
+            });
+        })
+    })
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+
+
+
+
+
+

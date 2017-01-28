@@ -1,0 +1,238 @@
+﻿@model M3LMS.Models.ref_Users
+@using M3LMS.Helper
+
+<!-- Dropdown Plugin -->
+<script src="~/Content/css/dropdown/all.js"></script>
+<link href="~/Content/css/dropdown/jquery.multiselect.css" rel="stylesheet" />
+<script src="~/Content/css/dropdown/jquery.multiselect.js"></script>
+<script src="~/Content/css/dropdown/platform.js"></script>
+<link href="~/Content/css/dropdown/style.css" rel="stylesheet" />
+<script>
+    $('#langOpt3').multiselect({ columns: 1, placeholder: 'Select Department', search: true, selectAll: true })
+</script>
+
+<!-- Alert -->
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+<link href="~/Content/css/popup/alert.min.css" rel="stylesheet" />
+<script src="~/Content/css/popup/alert.min.js"></script>
+<link href="~/Content/css/popup/theme.min.css" rel="stylesheet" />
+<!-- File Upload -->
+
+<style>
+    #GetDepartments {
+        margin-top: 14px;
+    }
+    select#DeptLists{
+        padding:0
+    }
+    select#DeptLists option:nth-child(odd) {
+    background-color: #bde4f5;
+    color: #393333;
+    padding: 5px;
+}
+    select#DeptLists option:nth-child(even) {
+    background-color: #bad0da;
+    color: #fff;
+    padding: 5px;
+    }
+    .dataTables_length {
+    float: left;
+}
+    .dataTables_length select {
+    padding: 4px;
+    width: auto !important;
+    height: auto !important;
+    background-color: #fff;
+    color: #333;
+}
+    .dataTables_filter input {
+    height: auto !important;
+    padding: 4px 10px !important;
+    color: #333;
+    float: right;
+}
+        .dataTables_filter input:focus {
+            outline:none
+        }
+</style>
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="page-heading">
+            <h2 class="pull-left">Create User</h2>
+        </div>
+        @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { id = "frm" }))
+        {
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email Id <span class="form-colon">:</span></label>
+                    <div class="col-sm-6 view-dep-list">
+                        <script type="text/javascript">
+                            function getTextBoxContent() {
+                                return document.getElementById('Email').value;
+                            }
+                        </script>
+                        @Html.TextBox("Email", null, new { @class = "form-control", @placeholder = "Email", @required = "true", @type="email" })
+                        @*@Ajax.ActionLink("View Dapartments", "GetDepartments", "User", new {Email=@}, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_DepartmentList", InsertionMode = InsertionMode.Replace })*@
+                        <input type="button" class="btn btn-primary pull-right" value="View Departments" id="GetDepartments" name="GetDepartments" />
+                        <div id="content_DepartmentList">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Department Name <span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @*@Html.DropDownListFor(a => a.DepartmentId, (IEnumerable<SelectListItem>)ViewBag.DeptList,new {id="chkveg",multiple="multiple" })*@
+                        @Html.DropDownList("DeptLists", (MultiSelectList)ViewBag.DeptList, new { multiple = "multiple", id = "langOpt3" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*<label class="col-sm-3 control-label">User Id <span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBox("Id", null,new { @class = "form-control", @placeholder = "UserId" })
+                    </div>*@
+                    
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">First Name<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBox("FirstName", null, new { @class = "form-control", @placeholder = "Enter First Name", @required = "true", @type="text" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Last Name<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBox("LastName", null, new { @class = "form-control", @placeholder = "Enter Last Name", @required = "true",@type="text" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Profile Photo<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        <input type="file" id="UserPhoto" class="custom-file-input" required="true">
+                        <img id="image-preview" src="" width="100" height="100" />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Password <span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBox("Password",null, new { @class = "form-control", @placeholder = "Password", @required = "true",@type="password" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Role <span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.DropDownList("RoleLists", (SelectList)ViewBag.RoleList)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-9">
+                        <button class="btn btn-primary" type="button" id="Save" name="Save">Create User</button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="clearfix"></div>
+        <div class="page-heading">
+            <h2 class="pull-left">Created User</h2>
+        </div>
+        <table class="table table-hover my-table">
+            <thead>
+
+                <tr>
+                    <th>User Email</th>
+                    <th>Department</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Role</th>
+                    <th>   </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var User in ViewBag.Userlist)
+                {
+                    <tr>
+                        <td>@User.Email</td>
+                        <td>@User.ref_department.DeptName</td>
+                        <td>xxxxx</td>
+                       <td>@User.FirstName</td>
+                        <td>@User.LastName</td>
+                        <td> @Html.Image("x",User.ImagePath,new {width=100, height=100})</td>
+                        <td>@User.ActiveStatus</td>
+                        <td>@User.UserRole</td>
+                        <td class="btn-edit">
+                            @Ajax.ActionLink("Edit", "EditUser", "User", new { id = @User.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                        </td>
+                        <td class="btn-delete">
+                            @Ajax.ActionLink("Delete", "DeleteUser", "User", new { id = @User.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function (){
+        $('#Save').click(function () {
+            
+            var url = "/User/CreateUser";
+            var form = $("#frm");
+            var Id = $("#Id").val();
+            var Email = $("#Email").val();
+            var Password = $("#Password").val();
+            var DeptLists = $("#DeptLists").val();
+            var UserPhoto = $("#UserPhoto").val();
+         
+              
+            //{ Id: Id, Email: Email, Password: Password, DeptLists:DeptLists }
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+                //alert("Data Successfully Saved");
+                $.alert.open('Success.!!', 'Data Updated Successfully..!!');
+                $("#content_wrpr").html(data);
+
+            });
+        })
+    });
+    
+    
+    $(document).ready(function (){
+        $('#GetDepartments').click(function ()
+        {
+            var url = "/User/GetDepartments";
+            var Email = $("#Email").val();
+            $.post(url, {Email:Email}, function (data)
+            {
+                $("#content_DepartmentList").html(data);
+            })
+            })
+        });
+        
+    
+    
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+</script>
+
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

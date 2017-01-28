@@ -1,0 +1,126 @@
+﻿@model M3LMS.ViewModels.User
+
+
+<!-- Alert -->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <link href="~/Content/css/popup/alert.min.css" rel="stylesheet" />
+    <link href="~/Content/css/popup/theme.min.css" rel="stylesheet" />
+
+<div id="content">
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="page-heading">
+                <h2 class="pull-left">Edit User</h2>
+            </div>
+
+            @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { id = "frm", enctype = "multipart/form-data" }))
+
+            {
+                @Html.HiddenFor(model=>model.Id)
+                <div class="form-horizontal ">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email Id <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(a => a.Email, null, new { @class = "form-control", @required = "true", @type = "email" })
+                            @Html.ValidationMessageFor(a => a.Email)
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">First Name <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(a => a.FirstName, null, new { @class = "form-control", @required = "true", @type = "text" })
+                            @Html.ValidationMessageFor(a => a.FirstName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Last Name <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(a => a.LastName, null, new { @class = "form-control", @required = "true", @type = "text" })
+                            @Html.ValidationMessageFor(a => a.LastName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Image <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            <img src="@Url.Content("~/Content/Upload/"+ViewBag.Image)" width="100" height="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">User Department <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(a => a.DepartmentId, ViewBag.DeptLists as IEnumerable<SelectListItem>, "-Select Dept-", new { @class = "form-control", @required = "true" })
+                            @Html.ValidationMessageFor(a => a.DepartmentId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">User Role <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(a => a.RoleId, ViewBag.RoleList as IEnumerable<SelectListItem>, "-Select Role-", new { @class = "form-control", @required = "true" })
+                            <SelectListItem></SelectListItem>
+                            @Html.ValidationMessageFor(a => a.RoleId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Profile Photo <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(a => a.ImagePath, new { type = "file", @class = "form-control"})
+                            @Html.ValidationMessageFor(a => a.ImagePath)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">User Status <span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.CheckBoxFor(a=>a.ActiveStatus)
+
+                            @*@Html.RadioButtonFor(model => model.ActiveStatus, "True", Model.ActiveStatus == true ? new { Checked = "checked" } : null)<b>Active</b>
+                            @Html.RadioButtonFor(model => model.ActiveStatus, "False", Model.ActiveStatus == true ? new { Checked = "checked" } : null)<b>In Active</b>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">&nbsp;</label>
+                        <div class="col-sm-6">
+                            
+                           <input type="submit" value="Save" id="Edit" name="Edit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                    }
+                </div>
+    </div>
+</div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#Edit').click(function () {
+                        var password = $('#password1').val();
+                        //if (password == null) {
+                        //    document.getElementById('pass_label').innerHTML = "Reguired"
+                        //}
+                        var url = "/User/EditUser";
+                        var form = $("#frm");
+                        var userid = $("#Id").val();
+                        var formData = form.serialize();
+                        $.post(url, formData, function (data) {
+                            $.alert.open('Success.!!', 'Data Updated Successfully..!!');
+                            $("#content_wrpr").html(data);
+
+                        });
+                    })
+                })
+            </script>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+
+            }
+
+
+
+
+
+
+

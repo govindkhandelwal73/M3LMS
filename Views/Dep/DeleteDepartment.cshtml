@@ -1,0 +1,142 @@
+﻿@model M3LMS.Models.ref_department
+
+
+<script src="~/Scripts/js/jquery-1.11.3.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+
+
+
+<fieldset>
+    <legend><h3>Are you sure you want to delete this?</h3></legend>
+
+    <table class="table table-hover my-table">
+        <thead style="background-color:#16c2bd">
+            <tr>
+                <td>
+                    Column Name
+                </td>
+                <td>
+                    Value
+                </td>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr style="display:none">
+                <td>
+                    @Html.HiddenFor(model => model.DeptId)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.DeptId)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DeptName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.DeptName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Description)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Location)
+                </td>
+            </tr>
+
+           
+
+
+            <tr>
+                <td>
+
+
+                    @Html.DisplayNameFor(model => model.PhoneNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.PhoneNo)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Strength)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Strength)
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</fieldset>
+@using (Html.BeginForm("CreateDepartment", "Dep", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="button" class="btn btn-primary" value="Delete" id="Delete" name="Delete" @*onclick="return Confirmation();*@ />
+        |
+        @Ajax.ActionLink("Cancel", "CreateDepartment", "Dep", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-warning" })
+    </p>
+}
+
+ <script type="text/javascript">
+     $(document).ready(function()
+     {
+         $('#Delete').click(function(){
+             var url = "/Dep/DeleteDepartment";
+             var deptid = $("#DeptId").val();
+
+             $.post(url, { Id: deptid }, function (data) {
+                  
+                 $("#content_wrpr").html(data);
+                 //alert("Record Deleted");
+                 
+             });
+         })
+     })
+         
+        
+         
+    
+    function Confirmation() {
+        if (confirm("Are you sure to Delete ?")) {
+
+            return true;
+        }
+
+
+        else {
+            return false;
+        }
+
+    }
+   
+    </script>
+ 
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

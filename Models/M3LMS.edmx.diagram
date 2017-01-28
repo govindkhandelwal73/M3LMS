@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0822196fad1f4511879d0621b2ee0235" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_allusercourse" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_allusertest" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_chapters" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_department" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_learnercoursemapping" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_LearnerMapping" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_learnertestmapping" Width="1.5" PointX="7.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_loginhistory" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_modules" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_page" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_pagesection" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_questions" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_roles" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_TestData" Width="1.5" PointX="5.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_TestQ" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_A14BC3_M3LMSModel.ref_Users" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK__ref_allus__Cours__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_chapters_ref_modules" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK__ref_learn__DeptI__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_modules_ref_department" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_Users_ref_department" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK__ref_learn__Cours__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK__ref_learn__TestI__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_questions_ref_modules" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_TestData_ref_modules" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_A14BC3_M3LMSModel.FK_ref_Users_ref_roles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

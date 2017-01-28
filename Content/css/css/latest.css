@@ -1,0 +1,60 @@
+.pad-0{
+	padding:0
+}
+.white-bg{
+	background-color:#fff	
+}
+.top-header {
+    float: left;
+    width: 100%;
+    background-color: #232c32;
+}
+.top-header span{
+color: #fff;
+    margin-left: 110px;
+    font-size: 19px;
+    margin-bottom: 10px;
+    float: left;
+}
+.top-header h2 {
+    color: #fff;
+    margin-left: 30px;
+    margin-bottom: 0;
+				margin-top:10px
+}
+.nav-xs .user-name{
+	display:none
+}
+.user-wrpr, .user-wrpr li {
+    width: 100%;
+				text-align:center
+}
+.user-option li a{
+	text-align:left !important
+}
+.blue-bg {
+    background-color: #4cb6cb;
+    float: left;
+				text-align:center
+}
+.blue-bg small{
+	color: #eaf6f9;
+}
+.post-media.col-lg-2 i {
+    font-size: 100px;
+}
+.heading {
+    border-bottom: 1px solid #4cb6cb;
+    color: #4cb6cb;
+				    padding: 7px 0;
+}
+article.media i {
+    font-size: 40px;
+}
+article.media img {
+    width: 40px;
+}
+article.media .media-body a {
+    margin-top: 13px;
+    float: left;
+}

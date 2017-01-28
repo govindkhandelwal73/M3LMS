@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style type="text/css">
+/* CSS used here will be applied after bootstrap.css */
+
+
+body {
+	background: url('images/bg_suburb.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.panel-default {
+	opacity: 0.9;
+	margin-top: 30px;
+}
+.form-group.last {
+	margin-bottom: 0px;
+}
+.login-wrpr {
+    background-color: #e7f1fb;
+}
+.login-wrpr .panel-heading{
+    text-align:center
+}
+.email {
+        background-image: url('images/icon/icon-mail.svg') !important;
+    background-repeat: no-repeat !important;
+    background-size: 20px !important;
+    background-position: 6px 5px !important;
+    background-color: transparent !important;
+    padding: 7px 35px;
+    color: #b0b1b2;
+    width: 100%;
+    border: 1px solid #000;
+    border: 1px solid #dfe8f1;
+    -webkit-box-shadow: inset 1px 1px 3px #f6f6f6;
+    -moz-box-shadow: inset 1px 1px 3px #f6f6f6;
+    box-shadow: inset 1px 1px 3px #f6f6f6;
+}
+.email:focus{
+background-image: url('images/icon/icon-mail-hover.svg') !important;
+color:#0097d4
+}
+.password{
+    background-image: url('images/icon/icon-key.svg') !important;
+    background-repeat: no-repeat !important;
+    background-size: 20px !important;
+    background-position: 6px 5px !important;
+    background-color: transparent !important;
+    padding: 7px 35px;
+    color: #b0b1b2;
+    width: 100%;
+    border: 1px solid #000;
+    border: 1px solid #dfe8f1;
+    -webkit-box-shadow: inset 1px 1px 3px #f6f6f6;
+    -moz-box-shadow: inset 1px 1px 3px #f6
+}
+.password:focus{
+background-image: url('images/icon/icon-key-hover.svg') !important;
+color:#0097d4
+}
+</style>
+<link rel="stylesheet" type="text/css" href="Content/css/bootstrap.css" />
+
+    <link rel="stylesheet" type="text/css" href="Content/css/style.css" />
+</head>
+
+<body class="login-wrpr">
+    <div id="page-header" class="bg-gradient-9">
+        <div id="mobile-navigation">
+            <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar">
+                <span></span>
+            </button>
+            <a href="#" class="logo-content-small" title="MonarchUI"></a>
+        </div>
+        <div id="header-logo" class="logo-bg">
+            <a href="#" class="logo-content-big" title="Learning Managment System">
+                Learning Managment System
+                <i>UI</i>
+                <span>The perfect solution for Learning</span>
+            </a>
+            <a href="index.html" class="logo-content-small" title="Learning Managment System">
+                Monarch
+                <i>UI</i>
+                <span>The perfect solution for Learning</span>
+            </a>
+            
+        </div>
+        
+        <!-- #header-nav-left -->
+
+        <div id="header-nav-right">
+        </div>
+        <!-- #header-nav-right -->
+
+    </div>
+
+<div class="container">
+ <div class="row">
+  <div class="col-md-4 col-md-offset-4">
+   <div class="panel panel-default" style="margin-top: 100px;">
+    <div class="panel-heading"> <strong class="">Login</strong> </div>
+    <div class="panel-body">
+     <form class="form-horizontal" role="form">
+      <div class="form-group">
+       <div class="col-sm-12">
+        <select class="form-control">
+        	<option>User Type</option>
+       		<option>Learner</option>
+          <option>Manager</option>
+          <option>Admin</option>
+        </select>
+       </div>
+      </div>
+      <div class="form-group">
+       <div class="col-sm-12">
+        <input type="email" class="email" id="inputEmail3" placeholder="Email" required="">
+       </div>
+      </div>
+      <div class="form-group">
+       <div class="col-sm-12">
+        <input type="password" class="password" id="inputPassword3" placeholder="Password" required="">
+       </div>
+      </div>
+      <div class="form-group">
+       <div class="col-sm-12">
+        <div class="checkbox">
+         <label class="">
+          <input type="checkbox" class="">
+          Remember me</label>
+        </div>
+       </div>
+      </div>
+      <div class="form-group last">
+       <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary btn-sm">Sign in</button>
+        <button type="reset" class="btn btn-default btn-sm">Reset</button>
+       </div>
+      </div>
+     </form>
+    </div>
+    <div class="panel-footer">Not Registered? <a href="#" class="">Register here</a> </div>
+   </div>
+  </div>
+ </div>
+</div>
+</body>
+</html>

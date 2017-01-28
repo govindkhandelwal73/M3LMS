@@ -1,0 +1,946 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_A14BC3_M3LMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ref_allusercourse">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ref_allusertest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestId" Type="int" />
+          <Property Name="CraetedDate" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="EmailId" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ref_chapters">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="ChapterName" Type="varchar" MaxLength="50" />
+          <Property Name="Content_Type" Type="varchar" MaxLength="10" />
+          <Property Name="Content" Type="varbinary(max)" />
+          <Property Name="Sort_Order" Type="int" />
+          <Property Name="ContentPath" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="ref_department">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="50" />
+          <Property Name="Strength" Type="int" />
+          <Property Name="Location" Type="varchar" MaxLength="100" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ref_learnercoursemapping">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EmailId" />
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="DeptId" Type="int" />
+          <Property Name="IsCompleted" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="New" Type="bit" />
+          <Property Name="Sort_Order" Type="int" />
+        </EntityType>
+        <EntityType Name="ref_LearnerMapping">
+          <Key>
+            <PropertyRef Name="LearnerId" />
+          </Key>
+          <Property Name="LearnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="100" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="TestId" Type="int" />
+          <Property Name="New" Type="bit" Nullable="false" />
+          <Property Name="Sort_Order" Type="int" />
+        </EntityType>
+        <EntityType Name="ref_learnertestmapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TestId" Type="int" />
+          <Property Name="IsCompleted" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ref_loginhistory">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Login_Date" />
+            <PropertyRef Name="Login_Time" />
+            <PropertyRef Name="Login_Type" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Login_Date" Type="datetime" Nullable="false" />
+          <Property Name="Login_Time" Type="datetime" Nullable="false" />
+          <Property Name="Login_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_modules">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="ref_page">
+          <Key>
+            <PropertyRef Name="PageId" />
+          </Key>
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_pagesection">
+          <Key>
+            <PropertyRef Name="PageId" />
+            <PropertyRef Name="Section" />
+          </Key>
+          <Property Name="PageId" Type="int" Nullable="false" />
+          <Property Name="Section" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ref_questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" />
+          <Property Name="Question" Type="varchar(max)" />
+          <Property Name="Option1" Type="varchar(max)" />
+          <Property Name="Option2" Type="varchar(max)" />
+          <Property Name="Option3" Type="varchar(max)" />
+          <Property Name="Option4" Type="varchar(max)" />
+          <Property Name="Answer" Type="varchar(max)" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ref_roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_TestData">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="ExpiryDate" Type="date" Nullable="false" />
+          <Property Name="Manager_Id" Type="int" Nullable="false" />
+          <Property Name="Module_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_TestQ">
+          <Key>
+            <PropertyRef Name="TestId" />
+            <PropertyRef Name="Qid" />
+          </Key>
+          <Property Name="TestId" Type="int" Nullable="false" />
+          <Property Name="Qid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_Users">
+          <Key>
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="DepartmentId" />
+            <PropertyRef Name="UserRole" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ref_allus__Cours__6B24EA82">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_allusercourse" Type="Self.ref_allusercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_allusercourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__Cours__6EF57B66">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_learnercoursemapping" Type="Self.ref_learnercoursemapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_learnercoursemapping">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__DeptI__6E01572D">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="0..1" />
+          <End Role="ref_learnercoursemapping" Type="Self.ref_learnercoursemapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_learnercoursemapping">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__TestI__33D4B598">
+          <End Role="ref_TestData" Type="Self.ref_TestData" Multiplicity="0..1" />
+          <End Role="ref_learnertestmapping" Type="Self.ref_learnertestmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_TestData">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="ref_learnertestmapping">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_chapters_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="0..1" />
+          <End Role="ref_chapters" Type="Self.ref_chapters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_chapters">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_modules_ref_department">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="1" />
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_modules">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_questions_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="0..1" />
+          <End Role="ref_questions" Type="Self.ref_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_questions">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_TestData_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_TestData" Type="Self.ref_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_TestData">
+              <PropertyRef Name="Module_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_Users_ref_department">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="1" />
+          <End Role="ref_Users" Type="Self.ref_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_Users">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_Users_ref_roles">
+          <End Role="ref_roles" Type="Self.ref_roles" Multiplicity="1" />
+          <End Role="ref_Users" Type="Self.ref_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ref_Users">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A14BC3_M3LMSModelStoreContainer">
+          <EntitySet Name="ref_allusercourse" EntityType="Self.ref_allusercourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_allusertest" EntityType="Self.ref_allusertest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_chapters" EntityType="Self.ref_chapters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_department" EntityType="Self.ref_department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_learnercoursemapping" EntityType="Self.ref_learnercoursemapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_LearnerMapping" EntityType="Self.ref_LearnerMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_learnertestmapping" EntityType="Self.ref_learnertestmapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_loginhistory" EntityType="Self.ref_loginhistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_modules" EntityType="Self.ref_modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_page" EntityType="Self.ref_page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_pagesection" EntityType="Self.ref_pagesection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_questions" EntityType="Self.ref_questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_roles" EntityType="Self.ref_roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_TestData" EntityType="Self.ref_TestData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_TestQ" EntityType="Self.ref_TestQ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_Users" EntityType="Self.ref_Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ref_allus__Cours__6B24EA82" Association="Self.FK__ref_allus__Cours__6B24EA82">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_allusercourse" EntitySet="ref_allusercourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__Cours__6EF57B66" Association="Self.FK__ref_learn__Cours__6EF57B66">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_learnercoursemapping" EntitySet="ref_learnercoursemapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__DeptI__6E01572D" Association="Self.FK__ref_learn__DeptI__6E01572D">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_learnercoursemapping" EntitySet="ref_learnercoursemapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__TestI__33D4B598" Association="Self.FK__ref_learn__TestI__33D4B598">
+            <End Role="ref_TestData" EntitySet="ref_TestData" />
+            <End Role="ref_learnertestmapping" EntitySet="ref_learnertestmapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_chapters_ref_modules" Association="Self.FK_ref_chapters_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_chapters" EntitySet="ref_chapters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_modules_ref_department" Association="Self.FK_ref_modules_ref_department">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_modules" EntitySet="ref_modules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_questions_ref_modules" Association="Self.FK_ref_questions_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_questions" EntitySet="ref_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_TestData_ref_modules" Association="Self.FK_ref_TestData_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_TestData" EntitySet="ref_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_Users_ref_department" Association="Self.FK_ref_Users_ref_department">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_Users" EntitySet="ref_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_Users_ref_roles" Association="Self.FK_ref_Users_ref_roles">
+            <End Role="ref_roles" EntitySet="ref_roles" />
+            <End Role="ref_Users" EntitySet="ref_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_A14BC3_M3LMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ref_allusercourse">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK__ref_allus__Cours__6B24EA82" FromRole="ref_allusercourse" ToRole="ref_modules" />
+        </EntityType>
+        <EntityType Name="ref_allusertest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestId" Type="Int32" />
+          <Property Name="CraetedDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_chapters">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="ChapterName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Content_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Sort_Order" Type="Int32" />
+          <Property Name="ContentPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK_ref_chapters_ref_modules" FromRole="ref_chapters" ToRole="ref_modules" />
+        </EntityType>
+        <EntityType Name="ref_department">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Strength" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ref_learnercoursemapping" Relationship="Self.FK__ref_learn__DeptI__6E01572D" FromRole="ref_department" ToRole="ref_learnercoursemapping" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK_ref_modules_ref_department" FromRole="ref_department" ToRole="ref_modules" />
+          <NavigationProperty Name="ref_Users" Relationship="Self.FK_ref_Users_ref_department" FromRole="ref_department" ToRole="ref_Users" />
+        </EntityType>
+        <EntityType Name="ref_learnercoursemapping">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EmailId" />
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="Int32" />
+          <Property Name="IsCompleted" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="New" Type="Boolean" />
+          <Property Name="Sort_Order" Type="Int32" />
+          <NavigationProperty Name="ref_department" Relationship="Self.FK__ref_learn__DeptI__6E01572D" FromRole="ref_learnercoursemapping" ToRole="ref_department" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK__ref_learn__Cours__6EF57B66" FromRole="ref_learnercoursemapping" ToRole="ref_modules" />
+        </EntityType>
+        <EntityType Name="ref_LearnerMapping">
+          <Key>
+            <PropertyRef Name="LearnerId" />
+          </Key>
+          <Property Name="LearnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="TestId" Type="Int32" />
+          <Property Name="New" Type="Boolean" Nullable="false" />
+          <Property Name="Sort_Order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ref_learnertestmapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestId" Type="Int32" />
+          <Property Name="IsCompleted" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ref_TestData" Relationship="Self.FK__ref_learn__TestI__33D4B598" FromRole="ref_learnertestmapping" ToRole="ref_TestData" />
+        </EntityType>
+        <EntityType Name="ref_loginhistory">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Login_Date" />
+            <PropertyRef Name="Login_Time" />
+            <PropertyRef Name="Login_Type" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Login_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Login_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Login_Type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_modules">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="ref_allusercourse" Relationship="Self.FK__ref_allus__Cours__6B24EA82" FromRole="ref_modules" ToRole="ref_allusercourse" />
+          <NavigationProperty Name="ref_chapters" Relationship="Self.FK_ref_chapters_ref_modules" FromRole="ref_modules" ToRole="ref_chapters" />
+          <NavigationProperty Name="ref_department" Relationship="Self.FK_ref_modules_ref_department" FromRole="ref_modules" ToRole="ref_department" />
+          <NavigationProperty Name="ref_learnercoursemapping" Relationship="Self.FK__ref_learn__Cours__6EF57B66" FromRole="ref_modules" ToRole="ref_learnercoursemapping" />
+          <NavigationProperty Name="ref_questions" Relationship="Self.FK_ref_questions_ref_modules" FromRole="ref_modules" ToRole="ref_questions" />
+          <NavigationProperty Name="ref_TestData" Relationship="Self.FK_ref_TestData_ref_modules" FromRole="ref_modules" ToRole="ref_TestData" />
+        </EntityType>
+        <EntityType Name="ref_page">
+          <Key>
+            <PropertyRef Name="PageId" />
+          </Key>
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_pagesection">
+          <Key>
+            <PropertyRef Name="PageId" />
+            <PropertyRef Name="Section" />
+          </Key>
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <Property Name="Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK_ref_questions_ref_modules" FromRole="ref_questions" ToRole="ref_modules" />
+        </EntityType>
+        <EntityType Name="ref_roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ref_Users" Relationship="Self.FK_ref_Users_ref_roles" FromRole="ref_roles" ToRole="ref_Users" />
+        </EntityType>
+        <EntityType Name="ref_TestData">
+          <Key>
+            <PropertyRef Name="TestId" />
+          </Key>
+          <Property Name="TestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Manager_Id" Type="Int32" Nullable="false" />
+          <Property Name="Module_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ref_learnertestmapping" Relationship="Self.FK__ref_learn__TestI__33D4B598" FromRole="ref_TestData" ToRole="ref_learnertestmapping" />
+          <NavigationProperty Name="ref_modules" Relationship="Self.FK_ref_TestData_ref_modules" FromRole="ref_TestData" ToRole="ref_modules" />
+        </EntityType>
+        <EntityType Name="ref_TestQ">
+          <Key>
+            <PropertyRef Name="TestId" />
+            <PropertyRef Name="Qid" />
+          </Key>
+          <Property Name="TestId" Type="Int32" Nullable="false" />
+          <Property Name="Qid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_Users">
+          <Key>
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="DepartmentId" />
+            <PropertyRef Name="UserRole" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ref_department" Relationship="Self.FK_ref_Users_ref_department" FromRole="ref_Users" ToRole="ref_department" />
+          <NavigationProperty Name="ref_roles" Relationship="Self.FK_ref_Users_ref_roles" FromRole="ref_Users" ToRole="ref_roles" />
+        </EntityType>
+        <Association Name="FK__ref_allus__Cours__6B24EA82">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_allusercourse" Type="Self.ref_allusercourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_allusercourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_chapters_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="0..1" />
+          <End Role="ref_chapters" Type="Self.ref_chapters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_chapters">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__DeptI__6E01572D">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="0..1" />
+          <End Role="ref_learnercoursemapping" Type="Self.ref_learnercoursemapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_learnercoursemapping">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_modules_ref_department">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="1" />
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_modules">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_Users_ref_department">
+          <End Role="ref_department" Type="Self.ref_department" Multiplicity="1" />
+          <End Role="ref_Users" Type="Self.ref_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_department">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="ref_Users">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__Cours__6EF57B66">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_learnercoursemapping" Type="Self.ref_learnercoursemapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_learnercoursemapping">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ref_learn__TestI__33D4B598">
+          <End Role="ref_TestData" Type="Self.ref_TestData" Multiplicity="0..1" />
+          <End Role="ref_learnertestmapping" Type="Self.ref_learnertestmapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_TestData">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="ref_learnertestmapping">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_questions_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="0..1" />
+          <End Role="ref_questions" Type="Self.ref_questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_questions">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_TestData_ref_modules">
+          <End Role="ref_modules" Type="Self.ref_modules" Multiplicity="1" />
+          <End Role="ref_TestData" Type="Self.ref_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_modules">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="ref_TestData">
+              <PropertyRef Name="Module_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_Users_ref_roles">
+          <End Role="ref_roles" Type="Self.ref_roles" Multiplicity="1" />
+          <End Role="ref_Users" Type="Self.ref_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ref_roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="ref_Users">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_A14BC3_M3LMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ref_allusercourse" EntityType="Self.ref_allusercourse" />
+          <EntitySet Name="ref_allusertest" EntityType="Self.ref_allusertest" />
+          <EntitySet Name="ref_chapters" EntityType="Self.ref_chapters" />
+          <EntitySet Name="ref_department" EntityType="Self.ref_department" />
+          <EntitySet Name="ref_learnercoursemapping" EntityType="Self.ref_learnercoursemapping" />
+          <EntitySet Name="ref_LearnerMapping" EntityType="Self.ref_LearnerMapping" />
+          <EntitySet Name="ref_learnertestmapping" EntityType="Self.ref_learnertestmapping" />
+          <EntitySet Name="ref_loginhistory" EntityType="Self.ref_loginhistory" />
+          <EntitySet Name="ref_modules" EntityType="Self.ref_modules" />
+          <EntitySet Name="ref_page" EntityType="Self.ref_page" />
+          <EntitySet Name="ref_pagesection" EntityType="Self.ref_pagesection" />
+          <EntitySet Name="ref_questions" EntityType="Self.ref_questions" />
+          <EntitySet Name="ref_roles" EntityType="Self.ref_roles" />
+          <EntitySet Name="ref_TestData" EntityType="Self.ref_TestData" />
+          <EntitySet Name="ref_TestQ" EntityType="Self.ref_TestQ" />
+          <EntitySet Name="ref_Users" EntityType="Self.ref_Users" />
+          <AssociationSet Name="FK__ref_allus__Cours__6B24EA82" Association="Self.FK__ref_allus__Cours__6B24EA82">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_allusercourse" EntitySet="ref_allusercourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_chapters_ref_modules" Association="Self.FK_ref_chapters_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_chapters" EntitySet="ref_chapters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__DeptI__6E01572D" Association="Self.FK__ref_learn__DeptI__6E01572D">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_learnercoursemapping" EntitySet="ref_learnercoursemapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_modules_ref_department" Association="Self.FK_ref_modules_ref_department">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_modules" EntitySet="ref_modules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_Users_ref_department" Association="Self.FK_ref_Users_ref_department">
+            <End Role="ref_department" EntitySet="ref_department" />
+            <End Role="ref_Users" EntitySet="ref_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__Cours__6EF57B66" Association="Self.FK__ref_learn__Cours__6EF57B66">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_learnercoursemapping" EntitySet="ref_learnercoursemapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ref_learn__TestI__33D4B598" Association="Self.FK__ref_learn__TestI__33D4B598">
+            <End Role="ref_TestData" EntitySet="ref_TestData" />
+            <End Role="ref_learnertestmapping" EntitySet="ref_learnertestmapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_questions_ref_modules" Association="Self.FK_ref_questions_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_questions" EntitySet="ref_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_TestData_ref_modules" Association="Self.FK_ref_TestData_ref_modules">
+            <End Role="ref_modules" EntitySet="ref_modules" />
+            <End Role="ref_TestData" EntitySet="ref_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_Users_ref_roles" Association="Self.FK_ref_Users_ref_roles">
+            <End Role="ref_roles" EntitySet="ref_roles" />
+            <End Role="ref_Users" EntitySet="ref_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_A14BC3_M3LMSModelStoreContainer" CdmEntityContainer="DB_A14BC3_M3LMSEntities">
+          <EntitySetMapping Name="ref_allusercourse">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_allusercourse">
+              <MappingFragment StoreEntitySet="ref_allusercourse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_allusertest">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_allusertest">
+              <MappingFragment StoreEntitySet="ref_allusertest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="CraetedDate" ColumnName="CraetedDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_chapters">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_chapters">
+              <MappingFragment StoreEntitySet="ref_chapters">
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="ChapterName" ColumnName="ChapterName" />
+                <ScalarProperty Name="Content_Type" ColumnName="Content_Type" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Sort_Order" ColumnName="Sort_Order" />
+                <ScalarProperty Name="ContentPath" ColumnName="ContentPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_department">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_department">
+              <MappingFragment StoreEntitySet="ref_department">
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_learnercoursemapping">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_learnercoursemapping">
+              <MappingFragment StoreEntitySet="ref_learnercoursemapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="New" ColumnName="New" />
+                <ScalarProperty Name="Sort_Order" ColumnName="Sort_Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_LearnerMapping">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_LearnerMapping">
+              <MappingFragment StoreEntitySet="ref_LearnerMapping">
+                <ScalarProperty Name="LearnerId" ColumnName="LearnerId" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="New" ColumnName="New" />
+                <ScalarProperty Name="Sort_Order" ColumnName="Sort_Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_learnertestmapping">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_learnertestmapping">
+              <MappingFragment StoreEntitySet="ref_learnertestmapping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_loginhistory">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_loginhistory">
+              <MappingFragment StoreEntitySet="ref_loginhistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login_Date" ColumnName="Login_Date" />
+                <ScalarProperty Name="Login_Time" ColumnName="Login_Time" />
+                <ScalarProperty Name="Login_Type" ColumnName="Login_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_modules">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_modules">
+              <MappingFragment StoreEntitySet="ref_modules">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_page">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_page">
+              <MappingFragment StoreEntitySet="ref_page">
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_pagesection">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_pagesection">
+              <MappingFragment StoreEntitySet="ref_pagesection">
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_questions">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_questions">
+              <MappingFragment StoreEntitySet="ref_questions">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Option1" ColumnName="Option1" />
+                <ScalarProperty Name="Option2" ColumnName="Option2" />
+                <ScalarProperty Name="Option3" ColumnName="Option3" />
+                <ScalarProperty Name="Option4" ColumnName="Option4" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_roles">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_roles">
+              <MappingFragment StoreEntitySet="ref_roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_TestData">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_TestData">
+              <MappingFragment StoreEntitySet="ref_TestData">
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="Manager_Id" ColumnName="Manager_Id" />
+                <ScalarProperty Name="Module_Id" ColumnName="Module_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_TestQ">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_TestQ">
+              <MappingFragment StoreEntitySet="ref_TestQ">
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Qid" ColumnName="Qid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_Users">
+            <EntityTypeMapping TypeName="DB_A14BC3_M3LMSModel.ref_Users">
+              <MappingFragment StoreEntitySet="ref_Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLearner.cshtml";
+
+}
+
+@model M3LMS.ViewModels.Learner
+
+
+
+<script src="/Content/css/Plugin/video/js/tvideo.js"></script>
+<link rel="stylesheet" href="/Content/css/Plugin/video/css/tvideo.css">
+
+
+<section id="content">
+    <section class="vbox">
+        <section class="scrollable wrapper-lg">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <p class="lead heading">Course Content </p>
+                    
+                    <h4>@Model.NewcourseName</h4>
+                    @Html.HiddenFor(x => x.CourseId);
+                </div>
+                <div class="clear"></div>
+
+
+
+                <div id="tvcontainer-full">
+                    <div id="tvwrapper" class="style-3">
+                        <div id="tvplaylist">
+                            <ul>
+                                @{
+                                    foreach (var item in Model.ChapterDetails)
+                                    {
+                                        <li> <span>@item.ChapterName</span></li>
+                                    }
+
+                                }
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="tvplayer">
+                        <div style="width:500px;height:350px;margin:0 auto;" id="player">
+                        </div>
+
+                    </div>
+                    <input type="submit" id="CouseComplete" name="command" value="Click here if Course has Completed" class="btn btn-primary" style="text-align:center;float:right" />
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </section>
+    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+
+
+    <script src="/Content/css/Plugin/video/FlowPlayer/flowplayer-3.2.12.min.js"></script>
+    <script>
+        flowplayer("player", {
+            src: "/Content/css/Plugin/video/FlowPlayer/flowplayer-3.2.16.swf",
+
+
+            wmode: "opaque" // This allows the HTML to hide the flash content
+        }, {
+            clip: {
+                url: '',
+                autoPlay: false,
+            }
+        });
+
+        $("#CouseComplete").click(function () {
+
+            $.ajax({
+                url: "/Learner/CompleteCourse?CourseId=" + $('#CourseId').val(),
+                data: { /* add other additional parameters */ },
+                cache: false,
+                type: "POST",
+                dataType: "html",
+
+                success: function (data, textStatus, XMLHttpRequest) {
+                    if (data) {
+                        alert("Course Complete successfully");
+                    }; // HTML DOM replace
+                }
+            });
+
+
+        })
+    </script>
+</section>

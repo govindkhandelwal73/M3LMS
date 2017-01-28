@@ -1,0 +1,179 @@
+﻿@model M3LMS.ViewModels.Courses
+
+<script src="../../Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/js/bootstrap.min.js"></script>
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+<!-- Alert -->
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+<link href="~/Content/css/popup/alert.min.css" rel="stylesheet" />
+<script src="~/Content/css/popup/alert.min.js"></script>
+<link href="~/Content/css/popup/theme.min.css" rel="stylesheet" />
+
+<style>
+    .status-box {
+        float: left;
+        position: relative;
+        top: 6px;
+    }
+</style>
+<div id="content">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="page-heading">
+                <h2 class="pull-left">Create Course</h2>
+            </div>
+            @using (Html.BeginForm(new { id = "frm" }))
+            {
+
+                //@Html.ValidationSummary(false)
+                <div class="form-horizontal form-wrpr">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Department Name<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+
+                            @Html.DropDownListFor(model => model.DepartmentId, ViewBag.DeptLists as IEnumerable<SelectListItem>, "Select Department", new { @class = "form-control", @required = "true", validate = "true" })
+                            @Html.ValidationMessageFor(model => model.DepartmentId, "Please Select the Department")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Course Name<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.CourseName, null, new { @class = "form-control", @placeholder = "Enter Course Name", @required = "true" })
+                            @Html.ValidationMessageFor(model => model.CourseName, "Please Enter Course Name")
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Number Of Chapters<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Description, null, new { @class = "form-control", @placeholder = "Enter Course Name", @required = "true" })
+                            @Html.ValidationMessageFor(model => model.Description, "Please Enter No. of Chapter")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Created Date<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.CreatedDate, null, new { @class = "form-control", @type = "date", @required = "true" })
+                            @*@Html.TextBoxFor(m => m.CreatedDate, new { id = "txtCreateDate" })*@
+                            @Html.ValidationMessageFor(model => model.CreatedDate, "Please Select Date")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status<span class="form-colon">:</span></label>
+                        <div class="col-sm-6">
+                            @Html.CheckBoxFor(a => a.Status, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">&nbsp;<span class="form-colon"></span></label>
+                        <div class="col-sm-6">
+                            <input type="submit" value="Create Course" class="btn btn-primary" id="Save" />
+                        </div>
+
+                        @if (TempData["ErrMsg"] != null)
+                        {
+                            <script type="text/javascript">
+                                alert("@TempData["ErrMsg"].ToString()");
+
+                            </script>
+
+                        }
+
+                    </div>
+
+
+                </div>
+            }
+            <div class="clearfix"></div>
+            <div class="page-heading">
+                <h2 class="pull-left">List of Courses</h2>
+            </div>
+            @using (Html.BeginForm("deleteNstatusCommand", "Manager", new { id = "frm" }))
+            {
+
+                <table class="table table-hover my-table">
+                    <thead>
+
+                        <tr>
+                            <th>Select</th>
+                            <th>Module Name </th>
+                            <th>Department</th>
+                            <th>Total Chapters</th>
+                            <th>Created Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (M3LMS.Models.ref_modules Courses in ViewBag.CoursesList)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="csid" id="csid" value="@Courses.CourseId" /></td>
+                                <td>@Courses.CourseName</td>
+                                <td>@Courses.ref_department.DeptName</td>
+                                <td>@Courses.NumberOfChapters</td>
+                                <td>@Courses.CreatedDate</td>
+                                <td>@Courses.Status</td>
+
+
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+
+                <input type="submit" name="command" value="Delete" class="btn btn-primary">
+                <input type="submit" name="command" value="ChangeStatus" class="btn btn-primary">
+            }
+            <div class="clearfix"></div>
+            <div class="btn-wrpr">
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+</script>
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/js/DateValidator.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtCreateDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>

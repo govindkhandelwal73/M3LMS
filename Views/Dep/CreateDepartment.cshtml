@@ -1,0 +1,186 @@
+﻿@model M3LMS.Models.ref_department
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/js/jquery-1.11.3.min.js"></script>
+
+<style>
+    #content_wrpr {
+        background-color: #fff;
+        padding: 30px !iMportant;
+        /* border-bottom: 1px solid #dfe8f1; */
+        /* float: left; */
+        border-radius: 4px;
+        margin-bottom: 30px;
+    }
+    
+    .dataTables_length {
+        float: left;
+    }
+
+        .dataTables_length select {
+            padding: 4px;
+            width: auto !important;
+            height: auto !important;
+            background-color: #fff;
+            color: #333;
+        }
+
+    .dataTables_filter input {
+        height: auto !important;
+        padding: 4px 10px !important;
+        color: #333;
+        float: right;
+    }
+
+        .dataTables_filter input:focus {
+            outline: none;
+        }
+</style>
+<div class="panel">
+    <div class="panel-body">
+        <div class="page-heading">
+            <h2 class="pull-left">Create Department</h2>
+        </div>
+
+       
+
+        @using (Html.BeginForm("CreateDepartment", "Dep", FormMethod.Post, new { id = "frm" }))
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Department Name <span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(a => a.DeptName, new { @class = "form-control", @placeholder = "Department Name", @required="true" })
+                        @Html.ValidationMessageFor(a => a.DeptName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Description<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(a => a.Description, new { @class = "form-control", @placeholder = "Description", @required = "true" })
+                        @Html.ValidationMessageFor(a => a.Description)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Location<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextAreaFor(a => a.Location, new { @class = "form-control", @placeholder = "Location", @required = "true" })
+                        @Html.ValidationMessageFor(a=>a.Location)
+                    </div>
+
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">PhoneNo<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(a => a.PhoneNo, new { @class = "form-control", @placeholder = "Phone No.", @required = "true" })
+                        @Html.ValidationMessageFor(a => a.PhoneNo)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Strength<span class="form-colon">:</span></label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(a => a.Strength, new { @class = "form-control", @placeholder = "Strength", @required=true })
+                        @Html.ValidationMessageFor(a => a.Strength)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-9">
+                        
+                        <input type="button" value="Save" id="Save" name="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            if (TempData["ErrMsg"] != null)
+                                               {
+                                                   <script type="text/javascript">
+    alert("@TempData["ErrMsg"].ToString()");
+
+                                                   </script>
+                                                  
+                                               }
+        }
+
+        <div class="clearfix"></div>
+        <div class="page-heading">
+            <h2 class="pull-left">Registred Department</h2>
+        </div>
+        <table class="table table-hover my-table">
+            <thead>
+
+                <tr>
+                    <th>Department Name</th>
+                    <th>Description</th>
+                   
+                    <th>Location</th>
+                    <th>Strength</th>
+                    <th>PhoneNo</th>
+                    <th></th>
+                    <th>   </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dept in ViewBag.Deptlist)
+                {
+                    <tr>
+                        <td>@dept.DeptName</td>
+                        <td>@dept.Description</td>
+                     
+                        <td>@dept.Location</td>
+                        <td>@dept.Strength</td>
+                        <td>@dept.PhoneNo</td>
+                        <td class="btn-edit">
+                            @Ajax.ActionLink("Edit", "EditDepartment", "Dep", new { id = @dept.DeptId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                        </td>
+                        <td class="btn-delete">
+                            @Ajax.ActionLink("Delete", "DeleteDepartment", "Dep", new { id = @dept.DeptId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "content_wrpr", InsertionMode = InsertionMode.Replace })
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Save').click(function () {
+            
+            var url = "/Dep/CreateDepartment";
+            var form = $("#frm");
+            //var deptid = $("#DeptId").val();
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+                $("#content_wrpr").html(data);
+                $('#frm')[0].reset();
+            });
+            
+        })
+    })
+
+    //$(document).ready(function () {
+    //    document.getElementById("#DeptName").value = "";
+    //    document.getElementById("#Description").value = "";
+    //    document.getElementById("#Location").value = "";
+    //    document.getElementById("#PhoneNo").value = "";
+    //    document.getElementById("#Strength").value = "";
+
+    //})
+</script>
+<script src="~/Scripts/js/Sortable/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-table').DataTable();
+    });
+        </script>
+@section Scripts
+{
+@Scripts.Render("~/bundles/jqueryval")
+
+}
